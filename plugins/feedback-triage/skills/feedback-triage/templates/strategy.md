@@ -27,7 +27,7 @@ Keep it short: one screen of prose, then the block.
 
 ## Where the effort goes
 
-[The horizon mix, and why. Tune (H1): features already proven to move a needle. Bet (H2): chartered bets with a 45-day review. Probe (H3): cheap tests of a hunch.]
+[The horizon mix as a share of active bets and probes, and why. Tune (H1): features already proven to move a needle. Bet (H2): chartered bets with a 45-day review. Probe (H3): cheap tests of a hunch.]
 
 ## What we've ruled out
 
@@ -41,8 +41,7 @@ owner: ""                  # who owns the strategy and signs its rulings
 approved: null             # date the owner approved it
 review_date: null          # a strategy is a bet too: review it within 120 days of approval
 
-diagnosis: >
-  ""                       # the challenge, in two or three sentences
+diagnosis: ""               # the challenge, in two or three sentences (use > and indented lines for more than one)
 
 segments:
   target:                  # who the product is for; triage counts breadth inside these
@@ -65,7 +64,7 @@ areas:                     # product areas triage sorts into; match your issue l
     labels: []             # issue labels for this area, such as area/payments
     owner: ""
 
-horizons:                  # share of active bets; must add up to 100
+horizons:                  # share of active bets and probes (a count, not hours); must add up to 100
   tune: 30                 # H1: proven features, renewed by charter review, deleted when they stop earning
   bet: 50                  # H2: chartered bets
   probe: 20                # H3: cheap probes of a hunch: interviews, fake doors, a prototype to 10 users
@@ -73,8 +72,8 @@ horizons:                  # share of active bets; must add up to 100
 rulings: []                # what you have decided not to do, so triage can answer it next time:
                            # - id: R-001
                            #   request: ""          # the request, in the asker's words
-                           #   ruling: no           # no | not_now | services (worth doing for one customer, priced as a deal)
-                           #   policy: P-01         # the policy behind the call
+                           #   ruling: "no"         # "no" | not_now | services (worth doing for one customer, priced as a deal); quote "no"
+                           #   policy: P-01         # the policy that decides it; or none, with policy_gap: the policy that's missing
                            #   reason: ""
                            #   reopen_if: ""        # the evidence that would reopen it
                            #   decided_by: ""

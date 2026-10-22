@@ -59,7 +59,7 @@ evidence:
   - "Feedback theme late-payments: 23 of 61 Q3 items"
   - "Interviews: 5 of 6 office managers spend 2 to 4 hours a week on follow-up calls"
 
-strategy: {policy: P-01, area: payments, horizon: bet, opportunity: OPP-001}
+strategy: {policy: P-01, area: payments, horizon: bet}
 
 value_type: frequency
 

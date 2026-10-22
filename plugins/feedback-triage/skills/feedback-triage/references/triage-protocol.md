@@ -45,8 +45,8 @@ Reply pattern for a ruled-out request:
 
 ## Step 4: Check strategy fit and flag failure modes
 
-- Name the policy each group serves.
-- If no policy fits, that is the finding. Propose a ruling (`no` or `not_now`), or ask the owner whether a policy is missing. Don't stretch a policy to cover it.
+- Name the policy that decides each group, yes or no. "P-01 says not now" is a fit: the policy decided it.
+- If no policy decides it either way, that is the finding. Don't stretch a policy to cover it. Either ask the owner to add a policy, or propose a ruling with `policy: none` and a `policy_gap` note saying what policy is missing; the validator accepts it with a warning until the strategy review adds the policy.
 - Check every group against `references/failure-modes.md` and flag what applies, with one line of evidence for the flag.
 - Requests from a `not_target` segment are a no or a services deal, not roadmap.
 
@@ -69,6 +69,14 @@ Reply pattern for a ruled-out request:
 - Check the strategy's horizon mix (`triage.py mix`). If bets are already over plan, say so before adding another.
 - Write an opportunity brief for each shortlisted item (`templates/opportunity-brief.md`).
 
+## Where things live
+
+- The strategy: `strategy.md` at the repository root (or `docs/`).
+- Triage reports: one file per run, such as `triage/2026-10-14.md`, with its briefs inside. A brief can also live in its own file.
+- Opportunity ids (`OPP-`) are unique across the repository. Before adding one, list the existing ids with `triage.py validate`.
+- A proposed ruling isn't in the strategy until the owner approves it, so a brief that cites it stays `parked` until then; mark it `ruled_out` after approval.
+- A tune (H1) brief for a feature that predates charters: link the feature's spec in `requests`, leave `charter` empty and set the status to `shortlisted`. The next step is a retroactive charter with the `feature-charter` skill, so the feature gets a needle and a review date like everything else.
+
 ## After approval
 
 Only after the owner approves:
@@ -77,4 +85,4 @@ Only after the owner approves:
 2. Apply area labels.
 3. Close duplicates and ruled-out items with the replies. Use GitHub's "close as not planned" for rulings and `/duplicate`-style links for duplicates.
 4. For each brief marked for a bet, hand it to the `feature-charter` skill. The brief's opportunity, rung and evidence become the charter's hypothesis, needle and `evidence`, and its policy, area and horizon become the charter's `strategy` block.
-5. Run `triage.py validate` on the strategy, the report and the charters.
+5. Run `triage.py validate` on the strategy, the reports and the charters, and regenerate the bet board.

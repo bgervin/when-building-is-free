@@ -16,7 +16,7 @@ Never invent strategy. Draft it from what the team already has: strategy decks, 
 | Policies | A rule for choosing: "We build for the person in the truck first; office-only features come second" | A target: "Increase NPS to 50"; a value: "Delight customers" |
 | Policy `decides` | One real request it says yes or no to | Blank. If you can't name one, the policy is fluff |
 | Areas | The product's real areas, matching issue labels | Org chart names that mean nothing to users |
-| Horizon mix | A deliberate split, with a reason | 100% bet, or no mix at all |
+| Horizon mix | A deliberate split of active bets and probes, with a reason | 100% bet, or no mix at all |
 
 ## The policy test
 

@@ -88,14 +88,14 @@ The three most-voted requests:
 
 ### 4. Strategy fit and failure modes
 
-| Item or group | Fits | Flag | Why |
+| Item or group | Policy that decides it | Flag | Why |
 |---|---|---|---|
-| #205 dark mode | None | loudest_voice | 48 votes, 4 accounts; no task fails without it |
+| #205 dark mode | P-01 says not now | loudest_voice | 48 votes, 4 accounts; no task fails without it |
 | #230, #236 QuickBooks Desktop | P-04 says services | hostage_customer | One account, 140 field staff, outside the segment |
 | #247, #249, #250 AI estimates | P-05 says not yet | rearview_mirror | All opened in the two weeks after a competitor's launch; no lost deal cites it |
 | #251 crypto | P-03 says no | hippo | Filed by the founder; no customer has asked |
 | #203 office reports | P-02 says second | None | Office-only; 3 target accounts |
-| #240 job photos | Unclear | None | 8 target accounts, but no evidence yet that photos change when invoices get paid. Parked: ask whether disputes cite missing proof of work |
+| #240 job photos | P-01, if photos get invoices paid sooner | None | 8 target accounts, but no evidence yet that photos change when invoices get paid. Parked: ask whether disputes cite missing proof of work |
 
 **Proposed new rulings:** R-002 to R-006, now in the [strategy's rulings](strategy.md) after approval on October 15.
 
@@ -105,16 +105,17 @@ Ranked by the strength of evidence that a result fails (telemetry first), then b
 
 | Rank | Opportunity | Rung | Accounts in segment | Votes | Horizon | Next step |
 |---|---|---|---|---|---|---|
-| 1 | OPP-001: office managers lose hours chasing late payments | User outcome | 18 | 24 | Tune (H1) | FC-007 kept; next review December 22 |
-| 2 | OPP-004: invoices started at a job site with no signal don't send | Task success | 11 | 9 | Bet (H2) | Charter next; the mix has room |
-| 3 | OPP-003: new contractors don't send a first invoice in their first week | User outcome | 9 | 9 | Bet (H2) | Charter FC-014 on `014-onboarding-checklist` |
-| 4 | OPP-002: contractors pay for materials before the customer pays anything | User outcome | 6 | 12 | Probe (H3) | 8 interviews and a "Request a deposit" fake door on quotes over $5,000, until November 5 |
+| 1 | OPP-004: invoices started at a job site with no signal don't send | Task success | 11 | 9 | Bet (H2) | Charter next; the mix has room |
+| 2 | OPP-003: new contractors don't send a first invoice in their first week | User outcome | 9 | 9 | Bet (H2) | Charter FC-014 on `014-onboarding-checklist` |
+| 3 | OPP-002: contractors pay for materials before the customer pays anything | User outcome | 6 | 12 | Probe (H3) | 8 interviews and a "Request a deposit" fake door on quotes over $5,000, until November 5 |
+
+Already running, so not ranked: OPP-001, late payments (18 target accounts, 24 votes), is FC-007, kept on September 30 and now tuning (H1) with its next review on December 22.
 
 ### 6. Opportunity briefs
 
 #### OPP-001: late payments
 
-Already chartered in August as [FC-007](../01-github-issue-payment-reminders/review.md). Kept on September 30; the four issues predate the launch.
+Written on October 14 for a bet already chartered in August as [FC-007](../01-github-issue-payment-reminders/review.md), so the board and the shortlist can see it. Kept on September 30; the four issues predate the launch.
 
 ```opportunity-brief
 id: OPP-001

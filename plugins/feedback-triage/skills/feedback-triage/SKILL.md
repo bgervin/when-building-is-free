@@ -1,6 +1,6 @@
 ---
 name: feedback-triage
-description: Triage customer feedback, GitHub issues and feature requests against a written product strategy. Sorts them into areas, merges duplicates by distinct account, applies past rulings, flags failure modes (loudest voice, hostage customer, competitor chasing, HiPPO, internal parity, zombie commitments), and shortlists opportunities by where users fail on the Needle Ladder. Also writes the strategy file and the leaders' bet board. Use when someone triages issues or feedback, grooms a backlog, asks what to build next, prioritizes feature requests, writes or reviews a product strategy, gets a request from a big customer or an executive, sees a competitor launch something, or prepares a portfolio review for leadership.
+description: Triage customer feedback, GitHub issues and feature requests against a written product strategy. Sorts them into areas, merges duplicates by distinct account, applies past rulings, flags failure modes (loudest voice, hostage customer, competitor chasing, HiPPO, internal parity, zombie commitments), and shortlists opportunities by the evidence that users fail at a result. Also writes the strategy file and the leaders' bet board. Use when someone triages issues or feedback, grooms a backlog, asks what to build next, prioritizes feature requests, writes or reviews a product strategy, gets a request from a big customer or an executive, sees a competitor launch something, or prepares a portfolio review for leadership.
 ---
 
 # Feedback triage
@@ -8,6 +8,10 @@ description: Triage customer feedback, GitHub issues and feature requests agains
 When building is nearly free, cost no longer says no for you. Every request is affordable, so the roadmap goes to whoever pushes hardest unless a written strategy decides first. This skill applies that strategy to incoming feedback, and hands the best opportunities to the `feature-charter` skill as bets.
 
 It **recommends; people decide.** Never close, label, comment on or charter anything until the owner approves the triage report. Research on automated feedback processing agrees: machines sort well, group unevenly, and should give decision makers insight rather than make the decision.
+
+## The Needle Ladder, briefly
+
+This skill shares a ladder with `feature-charter`. Rungs 1 to 4 are activity (shipped, discovered, adopted, retained); rungs 5 to 7 are results (task success, user outcome, business outcome). An opportunity names the result rung where users fail. Votes, mentions and usage are diagnostics, like activity rungs. The full guide is `references/needle-guide.md` in the `feature-charter` skill.
 
 ## The pieces
 
@@ -22,7 +26,7 @@ It **recommends; people decide.** Never close, label, comment on or charter anyt
 
 1. Look for an existing `product-strategy` block (usually `strategy.md` at the repository root or in `docs/`).
 2. If there is none, draft one from what the team already has: strategy decks, planning docs, OKRs, README, past decisions. **Never invent strategy.** Mark every inferred line as a proposal and ask the owner to confirm.
-3. Apply the policy test in `references/writing-strategy.md`: each policy must decide at least one real open issue (`decides`). Push back on goals posing as policies ("grow ARR 30%") and on a strategy that excludes no one.
+3. Apply the policy test in `references/writing-strategy.md`: each policy should decide at least one real open issue (`decides`); the validator warns when one doesn't. Push back on goals posing as policies ("grow ARR 30%") and on a strategy that excludes no one.
 4. Run `scripts/triage.py validate` and fix what the information allows.
 
 ## Workflow B: Triage a batch
@@ -32,7 +36,7 @@ Follow `references/triage-protocol.md`:
 1. **Sort into areas** using the strategy's areas and labels.
 2. **Merge duplicates**, counting distinct accounts, not mentions or votes.
 3. **Check past rulings.** Matches without new evidence get a reply that links the ruling.
-4. **Check strategy fit and flag failure modes** (`references/failure-modes.md`). If no policy fits, that is the finding: propose a ruling or ask whether a policy is missing.
+4. **Check strategy fit and flag failure modes** (`references/failure-modes.md`). Fit means a policy decides it, yes or no. If no policy decides it either way, that is the finding: ask the owner for the missing policy, or propose a ruling with `policy: none` and a `policy_gap` note.
 5. **Shortlist per area.** Restate requests as opportunities and name the rung where the job fails. Rank by the strength of evidence that a result fails (telemetry first), then by accounts in the target segment.
 6. **Place on a horizon**: tune (H1), bet (H2) or probe (H3). Check the mix with `scripts/triage.py mix`.
 

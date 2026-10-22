@@ -20,7 +20,7 @@ We serve owner-operated contractors with 2 to 20 field staff, where the owner or
 
 ## Where the effort goes
 
-Tune 30%, bet 50%, probe 20%. Payment reminders (FC-007) are proven and need tuning. Most effort goes to chartered bets on the cash cycle. A fifth goes to cheap probes, because a week of interviews or a fake door costs almost nothing now.
+Tune 30%, bet 50%, probe 20%, as a share of active bets and probes. Most effort goes to chartered bets on the cash cycle, and about a third to tuning what has proven itself. A fifth goes to cheap probes, because a week of interviews or a fake door costs almost nothing now.
 
 ## What we've ruled out
 

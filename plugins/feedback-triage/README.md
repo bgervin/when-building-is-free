@@ -10,7 +10,7 @@ When building is nearly free, cost no longer says no for you. This skill makes t
 2. **Merges duplicates** and counts distinct accounts, not mentions or votes.
 3. **Applies past rulings**, drafting a reply that links the ruling and says what would reopen it.
 4. **Checks strategy fit and flags six failure modes:** the loudest voice, the hostage customer, the rearview mirror (copying competitors), the HiPPO, the parity reflex (internal competition) and the zombie commitment.
-5. **Shortlists opportunities**, ranked by where users fail on the Needle Ladder, then by accounts in the target segment.
+5. **Shortlists opportunities**, ranked by the evidence that users fail at a result (telemetry first), then by accounts in the target segment.
 6. **Places each on a horizon** by evidence: tune (H1, proven), bet (H2), probe (H3, a cheap test).
 
 Everything is a recommendation. Nothing is closed, labelled or chartered until the owner approves.

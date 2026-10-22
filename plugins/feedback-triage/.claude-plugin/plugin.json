@@ -1,7 +1,7 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
   "name": "feedback-triage",
-  "description": "Triage feedback and issues against a written product strategy: areas, duplicates by distinct account, past rulings, failure-mode flags (loudest voice, hostage customer, competitor chasing, HiPPO, parity, zombie commitments), and a shortlist ranked by where users fail. Writes the strategy file and a bet board for leaders; hands bets to feature-charter.",
+  "description": "Triage feedback and issues against a written product strategy: areas, duplicates by distinct account, past rulings, failure-mode flags (loudest voice, hostage customer, competitor chasing, HiPPO, parity, zombie commitments), and a shortlist ranked by evidence that users fail at a result. Writes the strategy file and a bet board for leaders; hands bets to feature-charter.",
   "version": "1.0.0",
   "author": {
     "name": "Barry Gervin",

@@ -17,7 +17,7 @@
     },
     {
       "name": "feedback-triage",
-      "description": "Triage feedback and issues against a written product strategy: areas, duplicates by account, past rulings, failure-mode flags and a shortlist ranked by where users fail. Writes the strategy file and a bet board for leaders.",
+      "description": "Triage feedback and issues against a written product strategy: areas, duplicates by account, past rulings, failure-mode flags and a shortlist ranked by evidence that users fail at a result. Writes the strategy file and a bet board for leaders.",
       "version": "1.0.0",
       "source": "./plugins/feedback-triage"
     }
