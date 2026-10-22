@@ -1,0 +1,22 @@
+name: Example or field report
+description: Share a spec format we don't cover, or tell us how a charter worked out in practice.
+labels: ["feedback"]
+body:
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What are you sharing?
+      options:
+        - A spec format that needs a before and after example
+        - A charter that changed a keep or kill decision
+        - A case the charter didn't fit
+        - A validator bug
+    validations:
+      required: true
+  - type: textarea
+    id: details
+    attributes:
+      label: Details
+      description: Remove anything confidential. Fictional examples are fine.
+    validations:
+      required: true

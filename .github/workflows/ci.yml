@@ -1,0 +1,36 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  validator:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install pyyaml pytest
+      - name: Validator tests and example charters
+        run: pytest -q
+
+  marketplace:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Claude Code marketplace and plugin manifests
+        run: |
+          npm install --global @anthropic-ai/claude-code@2.1.308
+          claude plugin validate .
+          claude plugin validate ./plugins/feature-charter
+      - name: Skill discovery by the open skills CLI
+        run: npx --yes skills@latest add . --list

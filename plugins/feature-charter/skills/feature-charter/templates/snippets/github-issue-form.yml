@@ -1,0 +1,50 @@
+# Fields to ADD to your existing feature request issue form
+# (.github/ISSUE_TEMPLATE/<your-form>.yml). Paste these items into the
+# form's `body:` list, after your own fields. Keep everything you already have.
+#
+# The last field pre-fills a feature-charter block. GitHub wraps it in a code
+# fence when the issue is created, so the validator and agents can read it.
+
+  - type: markdown
+    attributes:
+      value: |
+        ### Outcome charter
+        Every feature is a bet with an expiry date. Say what should change for users, how you'll know, and when you'll decide to keep or remove it. An agent can fill the block below from your description if you leave it partly empty.
+
+  - type: textarea
+    id: bet
+    attributes:
+      label: The bet
+      description: We believe [change] for [specific users] will [observable outcome], because [why].
+    validations:
+      required: true
+
+  - type: textarea
+    id: needle
+    attributes:
+      label: How we'll know it worked
+      description: One result, not usage. For example "median days from invoice sent to paid drops from 34 to 27", not "reminders sent per week".
+    validations:
+      required: true
+
+  - type: textarea
+    id: charter
+    attributes:
+      label: Charter block
+      description: Leave the structure; fill what you know. Unknown baseline? Use measure_before_launch.
+      render: feature-charter
+      value: |
+        id: FC-000
+        status: proposed
+        owner: ""
+        builder: ""
+        judge: ""
+        approved: null
+        hypothesis: {we_believe: "", for: "", will_result_in: "", because: ""}
+        needle: {name: "", rung: task_success, definition: "", source: "", baseline: measure_before_launch, target: null, direction: increase, min_change: null, window_days: 28}
+        guardrails:
+          - {name: "", limit: ""}
+        evaluation: {method: before_after, review_date: null, keep_if: "", kill_if: "", iterate_if: "", if_inconclusive: sunset, look_at: ""}
+        removal: {flag: "", code_paths: [], data: "", estimate_hours: null}
+        decision_log: []
+        amendments: []

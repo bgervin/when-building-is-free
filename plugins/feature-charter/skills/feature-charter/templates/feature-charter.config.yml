@@ -1,0 +1,9 @@
+# Optional. Save as .feature-charter.yml at your repository root to change the defaults.
+# Delete any line you don't want to change.
+
+max_review_days: 45          # first review no later than this many days after approval
+max_renewal_days: 90         # a keep or iterate decision must schedule the next review within this
+low_traffic_weekly_users: 1000   # below this, the validator warns that an A/B test is likely underpowered
+removal_warn_hours: 40       # removal estimates above this get a warning
+sunset_stuck_days: 30        # sunset features not removed after this many days are flagged by `due`
+id_pattern: "FC-\\d{3,}"     # charter ids; change if you prefer your tracker's ids

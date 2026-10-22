@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-marketplace.json",
+  "name": "when-building-is-free",
+  "description": "Product management skills for AI software factories, from the When Building Is Free series.",
+  "owner": {
+    "name": "Barry Gervin",
+    "url": "https://github.com/bgervin"
+  },
+  "plugins": [
+    {
+      "name": "feature-charter",
+      "source": "./plugins/feature-charter",
+      "description": "Enrich existing specs with an outcome charter: one result metric, guardrails, an expiry date and a removal plan. Validator and CI gate included.",
+      "version": "1.0.0",
+      "license": "MIT",
+      "keywords": ["product-management", "specs", "prd", "metrics", "experimentation", "software-factory"]
+    }
+  ]
+}

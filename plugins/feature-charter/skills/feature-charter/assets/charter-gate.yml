@@ -1,0 +1,98 @@
+# Feature charter gate for GitHub Actions.
+# Copy to .github/workflows/charter-gate.yml in your product repository.
+#
+# It assumes:
+#   * the skill is installed at .github/skills/feature-charter (change CHARTER_TOOL if not)
+#   * your specs live under docs/ (change SPEC_PATHS to match; several paths are fine)
+#
+# What it enforces:
+#   1. Any changed spec that holds a feature-charter block validates, and locked
+#      sections can't change after approval without a new approved amendment.
+#   2. Pull requests labelled "feature" reference an approved charter (FC-###, or
+#      the id_pattern in your .feature-charter.yml) in their description.
+#   3. Every Monday it fails, with a list in the run summary, if reviews are overdue
+#      or sunset features were never removed.
+
+name: Feature charter gate
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize, reopened, labeled, unlabeled]
+  schedule:
+    - cron: "17 13 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  CHARTER_TOOL: .github/skills/feature-charter/scripts/charter.py
+  SPEC_PATHS: docs
+
+jobs:
+  validate-changed-specs:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install pyyaml
+      - name: Validate changed charters, with the pre-registration check
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: |
+          set -uo pipefail
+          status=0
+          # status, old path, new path (renames keep their history so the bet stays locked)
+          git diff --name-status -M --diff-filter=AMR "$BASE_SHA"...HEAD -- $SPEC_PATHS > "$RUNNER_TEMP/changes.txt"
+          while IFS=$'\t' read -r kind first second; do
+            f="${second:-$first}"
+            case "$f" in *.md|*.markdown|*.yml|*.yaml|*.json) ;; *) continue ;; esac
+            grep -qE 'feature-charter|^needle:' "$f" || continue
+            before="$first"
+            if git cat-file -e "$BASE_SHA:$before" 2>/dev/null; then
+              base="$RUNNER_TEMP/base-$(echo "$before" | tr '/' '_')"
+              git show "$BASE_SHA:$before" > "$base"
+              python "$CHARTER_TOOL" validate "$f" --baseline "$base" || status=1
+            else
+              python "$CHARTER_TOOL" validate "$f" || status=1
+            fi
+          done < "$RUNNER_TEMP/changes.txt"
+          exit $status
+
+  require-charter:
+    if: github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'feature')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install pyyaml
+      - name: Feature pull requests reference an approved charter
+        env:
+          PR_BODY: ${{ github.event.pull_request.body }}
+        run: |
+          set -uo pipefail
+          python "$CHARTER_TOOL" require $SPEC_PATHS --text "$PR_BODY"
+
+  due-reviews:
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install pyyaml
+      - name: Overdue reviews and unremoved sunsets
+        run: |
+          set -uo pipefail
+          python "$CHARTER_TOOL" due $SPEC_PATHS > due.txt; status=$?
+          { echo "## Feature charter reviews"; echo; echo '```'; cat due.txt; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+          cat due.txt
+          exit $status
