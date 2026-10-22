@@ -33,7 +33,7 @@ The skill adds an **Outcome charter** section to the spec you already use: a PRD
 4. Runs the keep, iterate or sunset review on the expiry date, and tracks removal.
 
 ```feature-charter
-id: FC-001
+id: FC-042
 status: approved
 owner: Head of Product
 builder: factory/build-agents
@@ -137,6 +137,10 @@ Each example keeps the original spec and adds to it. Compare `before.md` with `a
 | [Onboarding checklist](examples/04-spec-kit-onboarding-checklist) | Spec Kit `spec.md` | Success criteria tagged by rung, a new result criterion added, and a charter for an agent-built feature |
 
 The skill also covers RFCs and design docs; see its [snippets](plugins/feature-charter/skills/feature-charter/templates/snippets).
+
+## This repository's own bet
+
+The skill is held to its own rules. Its charter, [FC-001](charters/FC-001-feature-charter-skill.md), bets that charters lead to real decisions; stars and installs are diagnostics. The repository's weekly CI check fails if that review goes overdue.
 
 ## Sharing a charter story (optional)
 

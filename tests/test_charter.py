@@ -266,3 +266,10 @@ def test_story_link_needs_a_decision_and_respects_opt_out(tmp_path, monkeypatch)
     (tmp_path / ".feature-charter.yml").write_text("story_prompt: false\n")
     monkeypatch.chdir(tmp_path)
     assert charter.main(["story-link", "FC-100", str(spec_md), "--story", "x"]) == 1
+
+
+def test_this_repositorys_own_charters_are_valid():
+    found = [c for f, e in charter.find_files([str(ROOT / "charters")]) for c in charter.load_file(f, e)]
+    assert [c.id for c in found] == ["FC-001"]
+    for ch in found:
+        assert charter.validate(ch, CFG, date.fromisoformat(TODAY)).errors == []
