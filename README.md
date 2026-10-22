@@ -25,6 +25,8 @@ Rungs 1 to 4 are activity. Rungs 5 to 7 are results. A feature's needle belongs 
 
 ## The `feature-charter` skill
 
+<img src="assets/before-after.png" alt="Before: a GitHub issue's three success metrics, none of which says whether invoices get paid sooner. After: the same metrics, each labelled a diagnostic, plus a new Outcome charter with the bet, the needle (median days to paid, 34 to 27), a guardrail, a 45-day review and a removal plan." width="760">
+
 The skill adds an **Outcome charter** section to the spec you already use: a PRD, GitHub issue, user story, [Spec Kit](https://github.com/github/spec-kit) spec or RFC. It doesn't replace your template, restructure your document or delete what you wrote. It:
 
 1. Sorts the spec's existing success metrics by rung and labels the activity ones as diagnostics.
