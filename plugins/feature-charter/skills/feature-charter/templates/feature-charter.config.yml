@@ -7,3 +7,4 @@ low_traffic_weekly_users: 1000   # below this, the validator warns that an A/B t
 removal_warn_hours: 40       # removal estimates above this get a warning
 sunset_stuck_days: 30        # sunset features not removed after this many days are flagged by `due`
 id_pattern: "FC-\\d{3,}"     # charter ids; change if you prefer your tracker's ids
+story_prompt: true           # set false to stop agents offering a link to share an anonymized charter story

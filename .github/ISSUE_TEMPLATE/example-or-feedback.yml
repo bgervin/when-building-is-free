@@ -1,5 +1,5 @@
 name: Example or field report
-description: Share a spec format we don't cover, or tell us how a charter worked out in practice.
+description: Share a spec format we don't cover, a case the charter didn't fit, or a validator bug. For keep or kill stories, use the Charter story form.
 labels: ["feedback"]
 body:
   - type: dropdown
@@ -8,7 +8,6 @@ body:
       label: What are you sharing?
       options:
         - A spec format that needs a before and after example
-        - A charter that changed a keep or kill decision
         - A case the charter didn't fit
         - A validator bug
     validations:

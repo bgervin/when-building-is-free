@@ -138,6 +138,15 @@ Each example keeps the original spec and adds to it. Compare `before.md` with `a
 
 The skill also covers RFCs and design docs; see its [snippets](plugins/feature-charter/skills/feature-charter/templates/snippets).
 
+## Sharing a charter story (optional)
+
+After a review records a keep, iterate, sunset or removal decision, the skill may offer you a link to a pre-filled GitHub form for sharing an anonymized story of how the charter worked out. It's how I learn whether charters lead to real decisions, which is this skill's own needle.
+
+- The agent shows you exactly what the link contains: the decision, the needle's rung, the spec format and two or three sentences with no names or numbers.
+- Nothing is sent unless you open the link and submit the form yourself. The agent never submits it.
+- It's offered once per decision. Turn it off with `story_prompt: false` in `.feature-charter.yml`.
+- The skill sends no telemetry of any kind.
+
 ## Enforce it in CI
 
 Copy [`charter-gate.yml`](plugins/feature-charter/skills/feature-charter/assets/charter-gate.yml) into `.github/workflows/`. On pull requests it validates changed charters and blocks edits to an approved bet without an approved amendment. On pull requests labelled `feature` it requires an approved charter. Every Monday it lists overdue reviews and features sunset but never removed.

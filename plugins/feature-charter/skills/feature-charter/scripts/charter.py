@@ -14,6 +14,9 @@ Commands:
   validate PATH [PATH ...] [--baseline OLD] [--strict] [--json] [--today YYYY-MM-DD] [--config FILE]
   due PATH [PATH ...] [--soon-days N] [--json] [--no-fail] [--today YYYY-MM-DD] [--config FILE]
   require ID PATH [PATH ...]   exit 0 only if charter ID exists, is approved or later, and validates
+  story-link ID PATH [PATH ...] --story TEXT [--format FORMAT]
+                               print a link to a pre-filled, anonymous "Charter story" form for the
+                               latest decision; nothing is sent unless the person submits the form
 
 Blocks with the placeholder id FC-000 (used in templates) are skipped.
 
@@ -40,7 +43,9 @@ DEFAULTS = {
     "removal_warn_hours": 40,
     "sunset_stuck_days": 30,
     "id_pattern": r"FC-\d{3,}",
+    "story_prompt": True,           # offer, once per decision, a link to share an anonymized story
 }
+STORY_FORM = "https://github.com/bgervin/when-building-is-free/issues/new"
 PLACEHOLDER_ID = "FC-000"   # the id used in templates; blocks with it are skipped
 
 RUNGS = ["shipped", "discovered", "adopted", "retained", "task_success", "user_outcome", "business_outcome"]
@@ -173,7 +178,10 @@ def load_config(explicit: str | None) -> dict:
         if unknown:
             raise SystemExit(f"Unknown settings in {candidate}: {', '.join(sorted(unknown))}")
         for key, value in data.items():
-            if key == "id_pattern":
+            if key == "story_prompt":
+                if not isinstance(value, bool):
+                    raise SystemExit(f"{candidate}: story_prompt must be true or false")
+            elif key == "id_pattern":
                 if not isinstance(value, str):
                     raise SystemExit(f"{candidate}: id_pattern must be a string")
                 re.compile(value)
@@ -557,6 +565,26 @@ def due_rows(charters: list[Charter], cfg: dict, today: date, soon: int) -> list
     return rows
 
 
+def story_link(c: dict, story: str, spec_format: str = "") -> str:
+    """URL for the Charter story form, pre-filled with the latest decision, the needle's rung,
+    the spec format and the story text. Deliberately leaves out names, ids, numbers and links."""
+    from urllib.parse import urlencode
+    latest = last_decision(c)
+    decision = word(latest.get("decision")) if latest else None
+    if decision is None:
+        raise SystemExit("No decision recorded yet; offer a story only after a review decision.")
+    rung = word(get(c, "needle.rung")) or ""
+    params = {
+        "template": "charter-story.yml",
+        "title": f"Charter story: {decision}",
+        "decision": decision,
+        "spec_format": spec_format.strip()[:60],
+        "rung": rung if rung in RUNGS else "",
+        "story": story.strip()[:1200],
+    }
+    return STORY_FORM + "?" + urlencode({k: v for k, v in params.items() if v})
+
+
 def require_one(wanted, charters, paths, cfg, today) -> int:
     matches = [ch for ch in charters if ch.id == wanted]
     if not matches:
@@ -607,6 +635,13 @@ def main(argv=None) -> int:
     q.add_argument("--text", help="text to scan for charter ids, such as a pull request description")
     q.add_argument("--today")
     q.add_argument("--config")
+    k = sub.add_parser("story-link", help="link to a pre-filled form for sharing an anonymized charter story")
+    k.add_argument("id")
+    k.add_argument("paths", nargs="+")
+    k.add_argument("--story", required=True, help="two or three anonymized sentences the person has approved")
+    k.add_argument("--format", default="", help="spec format, such as PRD or GitHub issue")
+    k.add_argument("--config")
+    k.add_argument("--today")
     a = ap.parse_args(argv)
 
     today = to_date(a.today) if a.today else date.today()
@@ -631,6 +666,17 @@ def main(argv=None) -> int:
             rep = Report(Charter({}, str(f)))
             rep.error("file", f"could not read: {exc}")
             load_errors.append(rep)
+
+    if a.cmd == "story-link":
+        if not cfg["story_prompt"]:
+            print("Story prompts are turned off (story_prompt: false in .feature-charter.yml).")
+            return 1
+        matches = [ch for ch in charters if ch.id == a.id and isinstance(ch.data, dict)]
+        if len(matches) != 1:
+            print(f"FAIL  {a.id}: expected exactly one charter, found {len(matches)}")
+            return 1
+        print(story_link(matches[0].data, a.story, a.format))
+        return 0
 
     if a.cmd == "require":
         if a.text is not None:

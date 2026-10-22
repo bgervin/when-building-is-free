@@ -56,6 +56,8 @@ python .github/skills/feature-charter/scripts/charter.py require FC-007 docs/spe
 
 With a plugin install, ask your agent to run it.
 
+After a review decision, the skill may offer a link to share an anonymized story on GitHub. Nothing is sent unless you submit the form yourself; set `story_prompt: false` in `.feature-charter.yml` to turn the offer off. The skill sends no telemetry.
+
 See the [repository README](../../README.md) for installation in Claude Code, GitHub Copilot and other agents, and for before and after examples.
 
 MIT licensed.

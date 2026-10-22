@@ -4,7 +4,7 @@ Thanks for helping. The most useful contributions are:
 
 1. **Before and after examples** in spec formats not covered yet: RFCs, Kiro specs, Linear projects, Azure Boards features, Shape Up pitches. Add a folder under `examples/` with `before.md`, `after.md` and a short entry in `examples/README.md`. Keep the original spec intact in `after.md`; the point is enrichment, not replacement.
 2. **Validator fixes** with a test in `tests/`.
-3. **Field reports**: a charter that changed a keep or kill decision, or one that didn't fit your situation. Open an issue.
+3. **Field reports**: a charter that led to a keep, iterate, sunset or removal decision (use the Charter story issue form), or one that didn't fit your situation (open a regular issue).
 
 ## Ground rules
 

@@ -1,0 +1,65 @@
+name: Charter story
+description: Share how an outcome charter led to a keep, iterate, sunset or removal decision. Anonymous summaries are welcome.
+title: "Charter story: "
+labels: ["charter-story"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for sharing. Please leave out company, product, customer and people names, and any number you aren't comfortable making public. Nothing here is required beyond the decision and the story.
+
+  - type: input
+    id: decision
+    attributes:
+      label: Decision
+      description: keep, iterate, sunset or removed
+      placeholder: sunset
+    validations:
+      required: true
+
+  - type: input
+    id: spec_format
+    attributes:
+      label: Spec format the charter was added to
+      description: PRD, GitHub issue, user story, Spec Kit spec, RFC, or other
+      placeholder: PRD
+
+  - type: input
+    id: rung
+    attributes:
+      label: Needle rung
+      description: task_success, user_outcome or business_outcome (or an activity rung for an insurance feature)
+      placeholder: user_outcome
+
+  - type: dropdown
+    id: counterfactual
+    attributes:
+      label: Would this decision have happened without the charter?
+      options:
+        - "No: without the charter we wouldn't have decided, or would have decided differently"
+        - "Probably not, or not as soon"
+        - "Yes: we'd have made the same decision anyway"
+        - "Not sure"
+    validations:
+      required: true
+
+  - type: textarea
+    id: story
+    attributes:
+      label: What happened
+      description: Two or three sentences. What was the bet, what did the review show, and what did you decide?
+    validations:
+      required: true
+
+  - type: textarea
+    id: numbers
+    attributes:
+      label: Numbers (optional)
+      description: Baseline, result, or anything else you're happy to share publicly.
+
+  - type: checkboxes
+    id: permission
+    attributes:
+      label: Permission
+      options:
+        - label: OK to quote this story anonymously in the When Building Is Free newsletter

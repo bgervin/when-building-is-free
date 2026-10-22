@@ -6,13 +6,13 @@
   },
   "metadata": {
     "description": "Product management skills for AI software factories, from the When Building Is Free series.",
-    "version": "1.0.0"
+    "version": "1.1.0"
   },
   "plugins": [
     {
       "name": "feature-charter",
       "description": "Enrich existing specs with an outcome charter: one result metric, guardrails, an expiry date and a removal plan. Validator and CI gate included.",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "source": "./plugins/feature-charter"
     }
   ]

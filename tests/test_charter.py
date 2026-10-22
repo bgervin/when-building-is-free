@@ -243,3 +243,26 @@ def test_bad_config_value_is_rejected(tmp_path):
     cfg_file.write_text('max_review_days: "60"\n')
     with pytest.raises(SystemExit):
         charter.load_config(str(cfg_file))
+
+
+def test_story_link_holds_only_safe_fields():
+    from urllib.parse import urlparse, parse_qs
+    keep = {"date": "2026-11-10", "decision": "keep", "evidence": "secret 34 to 28", "decided_by": "Jane Doe",
+            "next_review": "2027-01-15"}
+    url = charter.story_link(changed(status="kept", decision_log=[keep]), "We kept it.", "PRD")
+    q = parse_qs(urlparse(url).query)
+    assert url.startswith("https://github.com/bgervin/when-building-is-free/issues/new?")
+    assert q["template"] == ["charter-story.yml"] and q["decision"] == ["keep"]
+    assert q["rung"] == ["user_outcome"] and q["spec_format"] == ["PRD"] and q["story"] == ["We kept it."]
+    assert "Jane" not in url and "secret" not in url and "FC-100" not in url
+
+
+def test_story_link_needs_a_decision_and_respects_opt_out(tmp_path, monkeypatch):
+    with pytest.raises(SystemExit):
+        charter.story_link(GOOD, "x")
+    spec_md = tmp_path / "spec.md"
+    keep = {"date": "2026-11-10", "decision": "keep", "evidence": "e", "decided_by": "PM", "next_review": "2027-01-15"}
+    spec_md.write_text("```feature-charter\n" + yaml.safe_dump(changed(status="kept", decision_log=[keep])) + "```\n")
+    (tmp_path / ".feature-charter.yml").write_text("story_prompt: false\n")
+    monkeypatch.chdir(tmp_path)
+    assert charter.main(["story-link", "FC-100", str(spec_md), "--story", "x"]) == 1

@@ -62,9 +62,11 @@ If there is no spec at all, suggest the team's usual template, or write a minima
 
 Follow `references/review-protocol.md`. The judge, never the builder, compares results with the written rules, checks guardrails, looks at real examples and records the decision in `decision_log`. A breached guardrail means sunset. Keep sets a `next_review` within 90 days.
 
+After the decision is recorded, you may offer once, at the end of your report, a link to share an anonymized story of how the charter worked out. Follow `references/sharing-a-story.md`: show the person exactly what the link contains, never submit it yourself, and skip it if they've declined or `.feature-charter.yml` sets `story_prompt: false`.
+
 ## Workflow D: Sunset and removal
 
-Sunset turns the flag off. Removal deletes the code, tests, docs and stored data. A feature stuck in sunset still costs upkeep. Record `removed` when the deletion merges.
+Sunset turns the flag off. Removal deletes the code, tests, docs and stored data. A feature stuck in sunset still costs upkeep. Record `removed` when the deletion merges. A removal is also a moment to offer the story link, under the same rules.
 
 ## Builder and judge are different
 
@@ -97,6 +99,7 @@ Defaults (45 days to first review, 90 per renewal, 1,000 weekly users before A/B
 | `templates/snippets/` | Placing it in a PRD, GitHub issue form, user story, Spec Kit spec, RFC or PR template |
 | `references/needle-guide.md` | Choosing the needle, guardrails and evaluation method |
 | `references/review-protocol.md` | A review date arrives, or someone asks whether to keep a feature |
+| `references/sharing-a-story.md` | After recording a decision, before offering the optional story link |
 | `references/example-enriched-issue.md` | Before your first enrichment, to see the expected size and tone |
 | `assets/charter-gate.yml` | Setting up enforcement in a GitHub repository |
 | `scripts/charter.py` | Validating charters and listing due reviews |
