@@ -32,5 +32,6 @@ jobs:
           npm install --global @anthropic-ai/claude-code@2.1.308
           claude plugin validate .
           claude plugin validate ./plugins/feature-charter
+          claude plugin validate ./plugins/feedback-triage
       - name: Skill discovery by the open skills CLI
         run: npx --yes skills@latest add . --list

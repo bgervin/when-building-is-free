@@ -2,7 +2,7 @@
   "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
   "name": "feature-charter",
   "description": "Enrich the specs you already write (PRDs, GitHub issues, user stories, Spec Kit specs) with an outcome charter: a pre-registered bet with one result metric, guardrails, an expiry date and a removal plan. Includes a validator and a CI gate.",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "author": {
     "name": "Barry Gervin",
     "url": "https://github.com/bgervin"
@@ -10,5 +10,14 @@
   "homepage": "https://github.com/bgervin/when-building-is-free",
   "repository": "https://github.com/bgervin/when-building-is-free",
   "license": "MIT",
-  "keywords": ["product-management", "specs", "prd", "metrics", "experimentation", "software-factory", "deprecation", "spec-kit"]
+  "keywords": [
+    "product-management",
+    "specs",
+    "prd",
+    "metrics",
+    "experimentation",
+    "software-factory",
+    "deprecation",
+    "spec-kit"
+  ]
 }

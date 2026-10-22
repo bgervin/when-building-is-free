@@ -31,6 +31,13 @@ hypothesis:
   because: ""               # the mechanism
 
 evidence: []                # optional: links or one-line facts behind the bet (feedback themes, telemetry, interviews)
+                            # these are the bet's drivers: every review re-checks that they still hold
+
+strategy:                   # optional: link to the product strategy; delete this block if there's no strategy file
+  policy: ""                # the policy this bet serves, such as P-01
+  area: ""                  # the product area, such as payments
+  horizon: bet              # tune (H1, proven) | bet (H2, chartered bet) | probe (H3, cheap test of a hunch)
+  opportunity: ""           # the opportunity brief it came from, such as OPP-001
 
 value_type: frequency       # frequency, or insurance for features valuable when needed (export, audit, recovery)
 insurance_reason: ""        # required for insurance features

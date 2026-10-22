@@ -80,6 +80,8 @@ hypothesis:
   will_result_in: more workspaces sending their first invoice within 7 days of signing up
   because: most new owners stall on setup steps they don't know they need before invoicing
 
+strategy: {policy: P-01, area: onboarding, horizon: bet, opportunity: OPP-003}
+
 value_type: frequency
 
 needle:

@@ -59,6 +59,8 @@ def test_good_charter_passes_clean():
 @pytest.mark.parametrize("path", sorted((ROOT / "examples").glob("*/*.md")))
 def test_examples_have_no_errors(path):
     charters = charter.load_file(path)
+    if (path.parent / "strategy.md").exists():
+        return  # a triage example: checked by test_triage.py
     if path.name == "before.md" or path.name == "README.md":
         assert charters == []
         return
@@ -273,3 +275,13 @@ def test_this_repositorys_own_charters_are_valid():
     assert [c.id for c in found] == ["FC-001"]
     for ch in found:
         assert charter.validate(ch, CFG, date.fromisoformat(TODAY)).errors == []
+
+
+def test_strategy_link_is_optional_and_checked_for_shape():
+    assert run(changed(strategy={"policy": "P-01", "area": "payments", "horizon": "bet", "opportunity": "OPP-001"})) == (set(), set())
+    errors, _ = run(changed(strategy={"area": "payments", "horizon": "someday"}))
+    assert {"strategy.policy", "strategy.horizon"} <= errors
+    errors, _ = run(changed(strategy="P-01"))
+    assert "strategy" in errors
+    _, warnings = run(changed(strategy={"policy": "P-01", "owner": "x"}))
+    assert {"strategy.horizon", "strategy.owner"} <= warnings

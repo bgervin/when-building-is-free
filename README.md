@@ -13,7 +13,7 @@ This repository holds the tools that go with the **When Building Is Free** newsl
 | No. | Article | What it covers | Tools here |
 |---|---|---|---|
 | 1 | **Stop measuring PR velocity: The Needle Ladder** | Why PR velocity, time to merge and tokens burned are Goodhart traps; the Needle Ladder; every feature as a pre-registered bet with an expiry date | [`feature-charter`](plugins/feature-charter) skill, validator, CI gate, [examples](examples) |
-| 2 | Triaging customer feedback at scale | Coming next | |
+| 2 | Strategy before triage *(coming next)* | When every request is affordable, strategy is the only filter left: six failure modes (the loudest voice, the hostage customer, the rearview mirror, the HiPPO, the parity reflex, the zombie commitment), feedback as evidence, horizons by evidence rather than time, and a bet board for leaders | [`feedback-triage`](plugins/feedback-triage) skill, strategy template, bet board, [example](examples/05-strategy-and-triage) |
 
 Article links are in [articles/](articles).
 
@@ -68,19 +68,36 @@ evaluation:
 removal: {flag: invoice-reminders, code_paths: [src/reminders/], estimate_hours: 4}
 ```
 
+## The `feedback-triage` skill
+
+Ranked by votes, a backlog puts the loudest request, the biggest customer's contract and a competitor's launch first. The skill triages the same backlog against a written strategy instead:
+
+1. Sorts issues and feedback into the strategy's product areas.
+2. Merges duplicates and counts distinct accounts in the target segment, not votes.
+3. Applies past rulings, so a settled request gets a reply that links the decision and says what would reopen it.
+4. Flags six failure modes, each a case of something other than evidence deciding the roadmap.
+5. Shortlists opportunities by the evidence that a result fails, and writes an opportunity brief for each.
+6. Places each on a horizon: tune (H1, proven), bet (H2) or probe (H3). Bets go to `feature-charter`.
+
+It also writes the [strategy file](plugins/feedback-triage/skills/feedback-triage/templates/strategy.md) (diagnosis, segments, policies that can decide a real request, areas, horizon mix, rulings) and generates a one-page [bet board](examples/05-strategy-and-triage/bet-board.md) for leaders: betting, probing, tuning, decided, not betting, and off plan. A kill on its review date shows up as the plan working.
+
+See the [worked example](examples/05-strategy-and-triage): a Q3 backlog ranked by votes, then the same document triaged against the strategy.
+
 ## Install
 
 ### Claude Code
 
 ```text
 /plugin install feature-charter --marketplace bgervin/when-building-is-free
+/plugin install feedback-triage --marketplace bgervin/when-building-is-free
 ```
 
-That one step works in Claude Code 2.1.275 or later. On older versions, add the marketplace first:
+That works in Claude Code 2.1.275 or later. On older versions, add the marketplace first:
 
 ```text
 /plugin marketplace add bgervin/when-building-is-free
 /plugin install feature-charter@when-building-is-free
+/plugin install feedback-triage@when-building-is-free
 ```
 
 Or from a shell: `claude plugin marketplace add bgervin/when-building-is-free`, then `claude plugin install feature-charter@when-building-is-free`.
@@ -90,16 +107,18 @@ Or from a shell: `claude plugin marketplace add bgervin/when-building-is-free`, 
 ```bash
 copilot plugin marketplace add bgervin/when-building-is-free
 copilot plugin install feature-charter@when-building-is-free
+copilot plugin install feedback-triage@when-building-is-free
 ```
 
 ### GitHub Copilot in VS Code and Copilot coding agent
 
-Copy the skill into your repository's `.github/skills/` folder:
+Copy the skills into your repository's `.github/skills/` folder:
 
 ```bash
 git clone --depth 1 https://github.com/bgervin/when-building-is-free /tmp/when-building-is-free
 mkdir -p .github/skills
 cp -r /tmp/when-building-is-free/plugins/feature-charter/skills/feature-charter .github/skills/
+cp -r /tmp/when-building-is-free/plugins/feedback-triage/skills/feedback-triage .github/skills/
 ```
 
 ### Other agents (Cursor, Codex, Gemini CLI and more)
@@ -116,6 +135,10 @@ Ask your agent in plain language:
 - "Which of the success metrics in this PRD are activity, and which are results?"
 - "FC-007's review date is today. Run the review."
 - "Which features are overdue for review?"
+- "Draft a strategy.md for this repository from our planning docs."
+- "Triage the open issues labelled feedback against our strategy."
+- "Our largest customer wants a two-way QuickBooks Desktop sync. Triage it."
+- "Make the bet board for Thursday's leadership review."
 
 The validator runs anywhere with Python 3.9+ and PyYAML. The paths below assume you copied the skill into `.github/skills/`. With a plugin install, ask your agent to run it; the skill tells it where the script is.
 
@@ -125,6 +148,8 @@ python .github/skills/feature-charter/scripts/charter.py validate docs/         
 python .github/skills/feature-charter/scripts/charter.py due docs/                        # overdue reviews, unremoved sunsets
 python .github/skills/feature-charter/scripts/charter.py require FC-007 docs/             # is this charter approved and valid?
 python .github/skills/feature-charter/scripts/charter.py require docs/ --text "$PR_BODY"  # every charter a PR mentions
+python .github/skills/feedback-triage/scripts/triage.py validate strategy.md triage/ docs/  # strategy, briefs, links
+python .github/skills/feedback-triage/scripts/triage.py board strategy.md triage/ docs/ --out bet-board.md
 ```
 
 ## Before and after
@@ -137,6 +162,7 @@ Each example keeps the original spec and adds to it. Compare `before.md` with `a
 | [Suggested replies](examples/02-prd-suggested-replies) | PRD | An AI feature where "suggestions accepted" would be a Goodhart trap; an unmeasured baseline handled honestly; a holdback |
 | [Invoice export](examples/03-user-story-invoice-export) | User story (Jira) | An insurance feature, valuable when needed rather than used often |
 | [Onboarding checklist](examples/04-spec-kit-onboarding-checklist) | Spec Kit `spec.md` | Success criteria tagged by rung, a new result criterion added, and a charter for an agent-built feature |
+| [Strategy and triage](examples/05-strategy-and-triage) | A backlog review and `strategy.md` | The same Q3 backlog ranked by votes, then triaged against a strategy: rulings, failure-mode flags, opportunity briefs and the bet board |
 
 The skill also covers RFCs and design docs; see its [snippets](plugins/feature-charter/skills/feature-charter/templates/snippets).
 
@@ -167,6 +193,7 @@ Defaults (45 days to first review, 90 days per renewal) can be changed in a [`.f
 4. **Every bet expires.** Inconclusive never means keep, and keep is a renewal with its own review date.
 5. **The builder never grades its own work.** A builder that can redefine its own needle will move the number without moving the outcome.
 6. **Deletable by default.** Every feature ships behind a kill switch with a removal plan.
+7. **Strategy decides before votes do.** A policy that can't decide a real request is fluff. Every no is recorded with a reason and what would reopen it.
 
 ## Built on
 
@@ -175,6 +202,11 @@ Defaults (45 days to first review, 90 days per renewal) can be changed in a [`.f
 - Fabijan, Dmitriev, Olsson and Bosch, [The Evolution of Continuous Experimentation](https://exp-platform.com/Documents/2017-05%20ICSE2017_EvolutionOfExP.pdf) (ICSE 2017)
 - Athey, Chetty, Imbens and Kang, [The Surrogate Index](https://www.nber.org/papers/26463)
 - Manheim and Garrabrant, [Categorizing Variants of Goodhart's Law](https://arxiv.org/abs/1803.04585) (2018)
+- Rumelt, Good Strategy Bad Strategy (2011): the kernel of diagnosis, guiding policy and coherent action
+- Maalej et al., [On the Automated Processing of User Feedback](https://arxiv.org/abs/2407.15519) (2024)
+- Armstrong and Collopy, [Competitor orientation](https://marketing.wharton.upenn.edu/wp-content/uploads/2022/02/60.-JSA.-Competitor-Oriented-Objectives-The-myth-of-Market-Share.pdf) (1996)
+- Staw, Knee-deep in the big muddy: escalation of commitment (1976)
+- The [VS Code issue triage process](https://github.com/microsoft/vscode/wiki/Issues-Triaging), which asks whether a request fits the product direction before it counts votes
 
 ## Contributing
 

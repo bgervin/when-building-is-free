@@ -56,6 +56,8 @@ MEASURED = {"live", "under_review", "kept", "iterating", "sunset", "removed"}
 REVIEWABLE = {"approved", "building", "live", "under_review", "iterating", "kept"}
 METHODS = {"ab_test", "holdback", "before_after", "qualitative"}
 DECISIONS = {"keep", "iterate", "sunset", "removed"}
+HORIZONS = {"tune": "H1", "bet": "H2", "probe": "H3"}   # horizons by evidence, not time
+STRATEGY_KEYS = {"policy", "area", "horizon", "opportunity"}
 LOCKED = ["hypothesis", "needle", "guardrails", "evaluation"]
 FENCE = re.compile(r"^(?P<indent>[ \t]*)(?P<fence>`{3,}|~{3,})[ \t]*feature-charter[ \t]*$", re.MULTILINE)
 USAGE_WORDS = re.compile(
@@ -339,6 +341,24 @@ def validate(ch: Charter, cfg: dict, today: date) -> Report:
         r.error("value_type", "must be frequency or insurance")
     if value_type == "insurance" and blank(c.get("insurance_reason")):
         r.error("insurance_reason", "say why this feature is valuable when needed rather than when used often")
+
+    # Optional link to the product strategy (the feedback-triage skill checks that the policy exists)
+    if "strategy" in c and c.get("strategy") is not None:
+        s = c.get("strategy")
+        if not isinstance(s, dict):
+            r.error("strategy", "must be a mapping with policy, area, horizon and optionally opportunity")
+        else:
+            for k in sorted(set(s) - STRATEGY_KEYS):
+                r.warn(f"strategy.{k}", f"unknown key; expected {', '.join(sorted(STRATEGY_KEYS))}")
+            if blank(s.get("policy")):
+                r.error("strategy.policy", "name the strategy policy this bet serves (for example P-01)")
+            elif not isinstance(s.get("policy"), str):
+                r.error("strategy.policy", "must be a policy id such as P-01")
+            h = s.get("horizon")
+            if blank(h):
+                r.warn("strategy.horizon", "say which horizon this bet is: tune (H1), bet (H2) or probe (H3)")
+            elif word(h) not in HORIZONS:
+                r.error("strategy.horizon", "must be tune (H1), bet (H2) or probe (H3)")
 
     # The needle
     for f in ("name", "rung", "definition"):

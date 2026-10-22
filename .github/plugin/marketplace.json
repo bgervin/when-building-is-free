@@ -6,14 +6,20 @@
   },
   "metadata": {
     "description": "Product management skills for AI software factories, from the When Building Is Free series.",
-    "version": "1.1.0"
+    "version": "1.2.0"
   },
   "plugins": [
     {
       "name": "feature-charter",
       "description": "Enrich existing specs with an outcome charter: one result metric, guardrails, an expiry date and a removal plan. Validator and CI gate included.",
-      "version": "1.1.0",
+      "version": "1.2.0",
       "source": "./plugins/feature-charter"
+    },
+    {
+      "name": "feedback-triage",
+      "description": "Triage feedback and issues against a written product strategy: areas, duplicates by account, past rulings, failure-mode flags and a shortlist ranked by where users fail. Writes the strategy file and a bet board for leaders.",
+      "version": "1.0.0",
+      "source": "./plugins/feedback-triage"
     }
   ]
 }

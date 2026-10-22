@@ -10,6 +10,7 @@ The products are fictional. Facts in the "after" versions (baselines, traffic, f
 | [02-prd-suggested-replies](02-prd-suggested-replies) | PRD | An AI feature, where the obvious target ("suggestions accepted") rewards the wrong behaviour. |
 | [03-user-story-invoice-export](03-user-story-invoice-export) | User story | An insurance feature: valuable when needed, so low usage is fine. |
 | [04-spec-kit-onboarding-checklist](04-spec-kit-onboarding-checklist) | Spec Kit `spec.md` | A spec built for agents, with measurable success criteria that still measure the wrong thing. |
+| [05-strategy-and-triage](05-strategy-and-triage) | A backlog review, `strategy.md` and a bet board | The same backlog ranked by votes, then triaged against a strategy (the `feedback-triage` skill). |
 
 ## 01: GitHub issue, payment reminders
 
@@ -58,6 +59,21 @@ The products are fictional. Facts in the "after" versions (baselines, traffic, f
 
 **Worth noticing:** SC-003 (setup tickets down 30%) is a good business outcome but too rare to read within 45 days. It stays as a secondary result for the next review rather than being thrown away.
 
+## 05: Strategy and triage
+
+**Before:** Tradebook's Q3 backlog review, sorted by 👍. The three most-voted requests are proposed for Q4: dark mode, a two-way QuickBooks Desktop sync for the largest account, and an AI estimate builder that a competitor launched in August. The founder's crypto payments request is labelled `priority/exec`.
+
+**Added**, keeping every line the author wrote:
+- A flag on each Q4 proposal and the executive request: the loudest voice, the hostage customer, the rearview mirror and the HiPPO, each with its evidence and a proposed ruling.
+- The six triage steps: areas, duplicates merged by distinct account, past rulings, strategy fit, a shortlist ranked by evidence that a result fails, and horizons.
+- Four opportunity briefs. Two are already charters (FC-007 in example 01 and FC-014 in example 04), one is a probe, and one is the next bet.
+
+**`strategy.md`** is the strategy the triage ran against: a diagnosis, one target and one non-target segment, five policies that each decide a real issue, five areas, a horizon mix and six rulings.
+
+**`bet-board.md`** is generated from the strategy, the briefs and the charters in examples 01 and 04. It shows bets running at a third of active work against a plan of half, which is why the next bet (OPP-004) has room.
+
+**Worth noticing:** none of the three most-voted requests makes the shortlist. The top new opportunity, invoices that fail to send from a job site with no signal, had 9 votes but 11 accounts and telemetry showing 14% of mobile sends failing.
+
 ## Check them yourself
 
 ```bash
@@ -66,3 +82,12 @@ python plugins/feature-charter/skills/feature-charter/scripts/charter.py validat
 ```
 
 Validate one file at a time: `after.md` and `review.md` in example 01 are two snapshots of the same charter, so a folder scan reports their shared id as a duplicate.
+
+For the triage example, validate the strategy, briefs and the charters they link to, and regenerate the bet board:
+
+```bash
+T=plugins/feedback-triage/skills/feedback-triage/scripts/triage.py
+F="examples/05-strategy-and-triage/strategy.md examples/05-strategy-and-triage/after.md examples/01-github-issue-payment-reminders/review.md examples/04-spec-kit-onboarding-checklist/after.md"
+python $T validate $F --today 2026-10-22
+python $T board $F --today 2026-10-22 --out examples/05-strategy-and-triage/bet-board.md
+```

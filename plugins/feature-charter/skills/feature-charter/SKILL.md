@@ -44,6 +44,7 @@ Hypothesis, needle, guardrails and evaluation lock when `approved` gets a date. 
 6. **Don't invent facts.** Never make up a baseline, a traffic number, an owner or a date. Use `measure_before_launch` for unknown baselines and leave unknown fields empty, each with a question in the spec's open questions section (add one if there is none). `owner`, `builder`, `judge`, `source` and `removal` may stay empty while the charter is `proposed`; the validator only warns.
    Targets, thresholds and `min_change` are different: they are the bet, so propose them, say they are proposals, and ask the owner to confirm. If the baseline is unknown, state `min_change` as a percentage, such as `'10%'`.
 7. **Pick an evaluation method that fits the traffic** (needle guide, section 7). Small products usually need `before_after` or `qualitative`.
+   **Link the strategy if there is one.** If the repository has a strategy file (a `product-strategy` block, usually `strategy.md`) or the work came from an opportunity brief (`opportunity-brief` block), fill the charter's `strategy` block with the policy, area, horizon and brief id, and copy the brief's evidence into `evidence`. Don't invent a policy: if none fits, leave the block out and say so, because a bet that serves no policy is a question for the owner.
 8. **Give the charter an id.** Use the next unused `FC-` number in the repository (the validator lists the ids it finds), or the team's tracker numbers if they set `id_pattern` in `.feature-charter.yml`. Never leave the template's `FC-000`: the validator skips it as a placeholder.
 9. **Run the validator** and fix every error that the spec's information allows. Warnings about unknowns are fine at `status: proposed`.
 10. **Report back briefly:** what you added, which existing metrics you annotated and why, and the questions only the owner can answer.
@@ -61,6 +62,8 @@ If there is no spec at all, suggest the team's usual template, or write a minima
 ## Workflow C: The review date
 
 Follow `references/review-protocol.md`. The judge, never the builder, compares results with the written rules, checks guardrails, looks at real examples and records the decision in `decision_log`. A breached guardrail means sunset. Keep sets a `next_review` within 90 days.
+
+Re-check the bet's drivers too: the facts in `evidence` and, if linked, the strategy policy. A feature kept going after its reasons are gone is a zombie commitment. If a driver no longer holds, say so in the decision's evidence even when the needle moved.
 
 After the decision is recorded, you may offer once, at the end of your report, a link to share an anonymized story of how the charter worked out. Follow `references/sharing-a-story.md`: show the person exactly what the link contains, never submit it yourself, and skip it if they've declined or `.feature-charter.yml` sets `story_prompt: false`.
 
