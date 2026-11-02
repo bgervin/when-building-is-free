@@ -14,6 +14,8 @@ payments" is an opportunity; "add SMS reminders" is one possible solution to it.
 
 **Evidence:** [distinct accounts, how many in the target segment, the telemetry that shows the failure, one or two quotes]
 
+**What everyone else carries:** [the settings, code paths and combinations this adds for every other customer and future feature. Building is free; complexity isn't.]
+
 ```opportunity-brief
 id: OPP-000                 # placeholder: change it, or the validator skips this block
 status: shortlisted         # shortlisted | probing | chartered | parked | ruled_out
@@ -28,6 +30,7 @@ breadth:
 rung: user_outcome          # where the job fails: task_success | user_outcome | business_outcome
 telemetry: ""               # what usage data shows about the failure, or "none yet"
 severity: ""                # how bad it is for them, in their words
+complexity: ""              # what every other customer would carry: settings, code paths, combinations to test
 strategy:
   policy: ""                # the policy that makes this worth doing, such as P-01
   horizon: bet              # tune (H1) | bet (H2) | probe (H3)

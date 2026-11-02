@@ -67,7 +67,7 @@ Reply pattern for a ruled-out request:
 | Probe (H3) | A hunch: little breadth, no telemetry yet, or a new segment | A probe with an end date: 5 to 10 interviews, a fake door, a prototype to 10 users |
 
 - Check the strategy's horizon mix (`triage.py mix`). If bets are already over plan, say so before adding another.
-- Write an opportunity brief for each shortlisted item (`templates/opportunity-brief.md`).
+- Write an opportunity brief for each shortlisted item (`templates/opportunity-brief.md`), including what it adds to the product's complexity. A narrow opportunity that adds a setting every customer sees should rank below one that doesn't.
 
 ## Where things live
 
